@@ -3,6 +3,16 @@ $LOAD_PATH.unshift(File.dirname(__FILE__)) unless $LOAD_PATH.include?(File.dirna
 require 'zlib'
 require 'curb'
 require 'sax-machine'
+
+SAXMachine::SAXHandler.class_eval do
+    alias :_start_element :start_element
+
+    def start_element(name, attrs = [])
+        attrs.flatten!
+        _start_element(name, attrs)
+    end
+end
+
 require 'loofah'
 require 'uri'
 
